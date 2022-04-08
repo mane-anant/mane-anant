@@ -20,3 +20,15 @@ class Song(db.Model):
         self.name=name
         self.Duration=Duration
         self.Uploaded_time=Uploaded_time
+
+class Process():
+    def add(data):
+        return db.session.add(data)
+    def save():
+        return db.session.commit()
+    def delete(data1):
+        return db.session.delete(data1)
+
+        # add=db.session.add()
+        # save=db.session.commit()
+        # elete=db.session.delete()

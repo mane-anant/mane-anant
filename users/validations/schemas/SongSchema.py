@@ -3,7 +3,6 @@ from ...app import app
 
 ms=Marshmallow(app)
 
-
 ###schema for song
 class SongSchema(ms.Schema):
     class Meta:
