@@ -1,13 +1,10 @@
 import json
 from flask_sqlalchemy import SQLAlchemy
-from users.app import app
+import sqlalchemy
+from ..app import app
 
 
-db=SQLAlchemy(app)
-
-app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:root@localhost/practicdb"
-
-
+db = SQLAlchemy(app)
 
 class Song(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -20,14 +17,19 @@ class Song(db.Model):
         self.name=name
         self.Duration=Duration
         self.Uploaded_time=Uploaded_time
+        
 
-class Process():
     def add(data):
         return db.session.add(data)
     def save():
         return db.session.commit()
     def delete(data1):
         return db.session.delete(data1)
+    def allQuery():
+        return Song.query.all()
+    def singleQuery(audioFileId):
+        return Song.query.get(audioFileId)
+
 
         # add=db.session.add()
         # save=db.session.commit()
