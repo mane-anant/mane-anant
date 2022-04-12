@@ -2,7 +2,7 @@ from importlib.util import resolve_name
 import json
 from flask import request,jsonify
 from users.app import app
-from users.logic.response import response
+from users.logic.response import bad_request,successful_request
 from users.logic.data_songs import get_data,add_data,delete_data,update_data
 
 
@@ -16,7 +16,7 @@ def getAudioFile(audioFileType,audioFileId=0):
         return data
             
     else:
-        return response.bad_request()
+        return bad_request()
 
 #add data
 @app.route("/add",methods=['POST'])
@@ -25,10 +25,10 @@ def addAudioFile():
     audioFileMetaData=request.json["audioFileMetaData"]
     if audioFileType=='song':
         add_data(audioFileMetaData)
-        return response.successful_request()
+        return successful_request()
 
     else:
-        return response.bad_request()
+        return bad_request()
 
 
 ##DELETE DATA##############
@@ -36,9 +36,9 @@ def addAudioFile():
 def deleteAudioFile(audioFileType,audioFileId):
     if (audioFileType=='song'):
         delete_data(audioFileId)
-        return response.successful_request()
+        return successful_request()
     else:
-        return response.bad_request()
+        return bad_request()
 
 #####UPDATE DATA#######
 @app.route("/update/<audioFiletype>/<audioFileId>",methods=['PUT'])
@@ -46,6 +46,6 @@ def updateAudioFile(audioFiletype,audioFileId):
     audioFileMetaData=request.json["audioFileMetaData"]
     if (audioFiletype=='song'):
         update_data(audioFileId,audioFileMetaData)
-        return response.successful_request()
+        return successful_request()
     else:
-        return response.bad_request()
+        return bad_request()

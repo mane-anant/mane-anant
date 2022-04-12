@@ -4,10 +4,9 @@ import json
 from flask import jsonify
 
 ##for bad response
-class response():
 
-    def bad_request():
-        return jsonify({"Request is invalid":"400 bad request"}),400
+def bad_request():
+    return jsonify({"Request is invalid":"400 bad request"}),400
 
-    def successful_request():
-        return jsonify({"Action is successful": "200 OK"}),200
+def successful_request():
+    return jsonify({"Action is successful": "200 OK"}),200
