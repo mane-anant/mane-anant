@@ -21,6 +21,7 @@ def getAudioFile(audioFileType,audioFileId=0):
 #add data
 @app.route("/add",methods=['POST'])
 def addAudioFile():
+    import pdb; pdb.set_trace()
     audioFileType=request.json["audioFileType"]
     audioFileMetaData=request.json["audioFileMetaData"]
     if audioFileType=='song':
