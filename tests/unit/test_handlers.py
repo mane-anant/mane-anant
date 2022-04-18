@@ -76,6 +76,7 @@ def test_delete_user_data(mocker,fixture_client,get_id,expected_response,status_
     assert handler_response.status_code == status_code
     assert result_data == expected_response
 #####################################################################################
+
 @pytest.mark.parametrize((
     'payload','expected_response'
 ),[
@@ -113,3 +114,40 @@ def test_add_user_data(mocker,fixture_client,payload,expected_response):
         assert type(create_song_mock.call_args_list[0][0][1]) == str
     else:
         assert result_data == expected_response.errors
+###########################################################################
+
+@pytest.mark.parametrize((
+    'id','payload','expected_response','status_code'
+),[
+    (
+        1,{'audioFileMetaData':{'id': 1, 'name': 'tera fitur','Duration':3,'Uploaded_time':'2022/3/30'}},
+        'Data submitted Successsully',200
+    ),
+    (
+        2,{'audioFileMetaData':{'id': 2, 'name': 'tera fitur','Duration':3,'Uploaded_time':'2022/3/30'}},
+        'Data submitted Successsully',200
+    ),
+    (
+        3,{'audioFileMetaData':{'id': 3, 'name': 'tera fitur','Duration':3,'Uploaded_time':'2022/3/30'}},
+        'Data submitted Successsully',200
+    ),
+    (
+        15,{'id': 15, 'name': 'null','Duration':3,'Uploaded_time':'2022/3/30'},
+        'Invalid Data',404
+    )
+]
+)
+def test_update_user_data(mocker,fixture_client,payload,expected_response,status_code,id):
+    audioFiletype='song'
+    update_song_mock =mocker.patch.object(data_songs,'update_data')
+    update_song_mock.return_value = expected_response
+    handler_response = fixture_client.patch(f'/update/{audioFiletype}/{id}',json=payload)
+
+    if handler_response.data.decode() != '':
+        result_data = handler_response.data.decode()
+        return result_data
+    
+    assert handler_response.status_code == status_code
+    assert result_data == expected_response.message
+    assert update_song_mock.called
+    assert update_song_mock.called_once_with(audioFiletype, id)
